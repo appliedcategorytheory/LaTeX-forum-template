@@ -1,0 +1,223 @@
+% ===========================
+%     PREAMBLE
+% ===========================
+
+\documentclass{amsart}          
+
+% ==============================
+% PACKAGES
+%
+% Add your own packages here
+% ==============================
+
+\usepackage{amsfonts}
+\usepackage{amssymb}  
+\usepackage{amsthm} 
+\usepackage{amsmath} 
+\usepackage{caption}
+\usepackage[inline]{enumitem}
+\setlist{itemsep=0em, topsep=0em, parsep=0em}
+\setlist[enumerate]{label=(\alph*)}
+\usepackage{etoolbox}
+\usepackage{stmaryrd} 
+\usepackage[dvipsnames]{xcolor}
+\usepackage[]{hyperref}
+\hypersetup{
+  colorlinks,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue}
+\usepackage{graphicx}
+\graphicspath{{assets/}}
+\usepackage{mathtools}
+
+\usepackage{tikz}
+\usetikzlibrary{
+  matrix,
+  arrows,
+  shapes
+}
+
+\setcounter{tocdepth}{1} % Sets depth for table of contents. 
+
+% ======================================
+% STYLING
+%
+% For those papers that need tikz (etc.) styles included
+%
+% ======================================
+
+
+\usetikzlibrary{decorations.pathmorphing}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes.geometric}
+
+\pgfdeclarelayer{edgelayer}
+\pgfdeclarelayer{nodelayer}
+\pgfsetlayers{edgelayer,nodelayer,main}
+\tikzstyle{none}=[inner sep=0pt]
+
+
+% ======================================
+% MACROS
+%
+% Add your own macros below here
+% ======================================
+
+% Use \iam for your primary reading response
+\newcommand{\iam}[1]{
+  \hrule
+  \vspace{0.25em}
+  \textbf{{#1}'s Reading Response}
+  \vspace{0.25em}
+  \hrule
+  \vspace{1em}
+}
+
+% Use \respond to respond to someone's primary response
+\newcommand{\respond}[1]{
+  \vspace{1em} \textbf{#1}
+}
+
+
+% Draw an (in-line) drawing of the node, given by its tikz style
+% e.g. ` \node{P1X}{X} ` draws a node with style given by P1X in ./assets/paper1.tikzstyle, and labelled by `X`
+\newcommand{\node}[2]{
+	\begin{tikzpicture}[scale=0.3,
+    every node/.style={scale=0.75}]
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=#1] (1)   at (0, 0)   {#2};
+		\node [style=none] (2)   at (-1, 0)   {};
+		\node [style=none] (3)   at (1, 0)   {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [-] (1.center) to (2.center);
+		\draw [-] (1.center) to (3.center);
+	\end{pgfonlayer}
+	\end{tikzpicture}
+}
+
+% Include a tikz figure, found in the ./assets/ folder
+% e.g. ` \tikzfig{paper1-CNOT} ` includes the file `./assets/paper1-CNOT.tikz`
+% This makes life a lot easier if you need to move folders around.
+\newcommand{\tikzfig}[1]{
+\InputIfFileExists{#1}{}{\input{./assets/#1.tikz}}
+}
+
+
+% Refer to composition with the command \comp
+\newcommand{\comp}{\circ}
+% Refer to tensor product with the command \tensor
+\newcommand{\tensor}{\otimes}
+
+% bra-kets for quantum computing
+\newcommand\bra[1]{\left< \, #1\, \right|}
+\newcommand\ket[1]{\left|\, #1 \, \right>}
+\newcommand\braket[2]{\left<\, #1 \,|\, #2 \,\right>}
+
+% ======================================
+% FRONT MATTER
+% ======================================
+
+\author{Forum Participants}
+\title{Reading Responses}
+\begin{document}
+\maketitle{}
+
+% ======================================
+% RESPONSES FOR PAPER 0
+% Example Reading Response
+% ======================================
+
+\section*{Example Reading Response}
+\label{sec:ex-response}
+
+\iam{Daniel}
+
+This is an example of how to enter your response. The
+content of your response can include anything relevant to
+the paper.  Some prompts are
+\begin{itemize}
+\item thoughts and ideas
+\item worked examples
+\item what you liked or disliked
+\item questions about things you didn't understand
+\item questions and thoughts about extentions of the paper.
+\end{itemize}
+But really feel free to be as creative and out of the box,
+as long winded or short winded as you like.  Make
+connections to other topics.
+
+Note how I used the \verb|\iam{}| macro to introduce my primary
+reading response and see how it appears on the compiled pdf.
+If you have any favorite macros, feel free to include them
+in the preamble. To keep this document tidy, please place
+them in the MACRO's section of the preamble.  If you would
+like to include any packages, you can do that in the
+``packages'' sections of the preamble.
+
+\respond{Jules} This forum is also for starting
+conversations, not just giving one-off responses.  So if
+you'd like to respond to someone else, you can use the
+\verb|\respond{}| macro for this. Do this to answer
+questions posed, ask follow-up questions, react to ideas, or
+to respond with anything relevant.
+
+You can also support your claims by citing papers. Write
+the bibliography entry at the bottom of the LaTeX file. Cite
+it using the command
+\begin{verbatim}
+    \cite{ENTRY}
+\end{verbatim}
+where ENTRY is what you named your reference.  Use any
+format you like, this forum is an internal document only to
+be seen by school participants. If the paper is available
+online, link to it for convenience. Note the entry
+\verb|\bibitem{CatSem}| in bibilography which, when called,
+appears as \cite{CatSem}.
+
+Quick question: what if I want to include an image into a
+response?
+
+\respond{Daniel} Even though I'm the original poster, I'm
+responding to Jules, so I'll use the \verb|\respond{}|
+macro.
+
+To include images, place the file in the \verb|\assets\|
+directory then by typing
+\begin{verbatim}
+   \begin{center}
+     \includegraphics[scale=s]{FILE-NAME.XXX}
+   \end{center}
+\end{verbatim}
+where $ 0< s \leq 1 $, FILE-NAME the name of your file, and XXX is the
+extension. 
+
+%For example, note the file \verb|groth.jpg| in
+%the \verb|\assets\| directory. By including it as stated, you will see
+%\begin{center}
+%  \includegraphics[scale=0.25]{groth.jpg}
+%\end{center}
+%in the compiled document.
+
+
+
+% =============================
+% BIBLIOGRAPHY
+%
+% Add any citations here.
+% Use whatever style you like.
+% It's only for us
+% =============================
+
+
+\begin{thebibliography}{99}
+
+\bibitem{CatSem} Bob Coecke, Samson Abramsky. A categorical
+  semantics of quantum protocols. \url{https://ieeexplore.ieee.org/abstract/document/1319636} 
+
+\end{thebibliography}
+
+\end{document}
